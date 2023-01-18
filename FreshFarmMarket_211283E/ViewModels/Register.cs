@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace FreshFarmMarket_211283E.ViewModels
 {
-    public class Register:IdentityUser
+    public class ApplicationUser:IdentityUser
     {
         [Required]
         [DataType(DataType.Text)]
@@ -12,6 +13,8 @@ namespace FreshFarmMarket_211283E.ViewModels
 
         [Required]
         [DataType(DataType.CreditCard)]
+        // Visa Credit Card Format
+        [RegularExpression(@"^4[0-9]{12}(?:[0-9]{3})?$")]
         public string CreditCardNumber { get; set; }
 
         [Required]
@@ -27,16 +30,7 @@ namespace FreshFarmMarket_211283E.ViewModels
 
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string EmailAddress { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = "Password and confirmation password does not match")]
-        public string ConfirmPassword { get; set; }
+        public string Email { get; set; }
 
         [MaxLength(50)]
         public string? Photo { get; set; }
@@ -44,7 +38,12 @@ namespace FreshFarmMarket_211283E.ViewModels
         [Required]
         public string AboutMe { get; set; }
 
+
+        
+
     }
 
 
 }
+
+

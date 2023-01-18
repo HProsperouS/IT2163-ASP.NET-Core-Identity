@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreshFarmMarket_211283E.Model
 {
-    public class AuthDbContext: IdentityDbContext<Register>
+    public class AuthDbContext: IdentityDbContext<ApplicationUser>
     {
         private readonly IConfiguration _configuration;
         // public AuthDbContext(DbContextOptions<AuthDbContext> options):base(options){}

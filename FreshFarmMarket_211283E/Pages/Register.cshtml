@@ -1,6 +1,7 @@
 ﻿@page
 @model FreshFarmMarket_211283E.Pages.RegisterModel
 @{
+
 }
 
 <section class="h-100">
@@ -28,11 +29,12 @@
                                             <span asp-validation-for="Upload" class="text-danger"></span>
                                         </div>
                                     </div>
+
                                     <div class="form-outline mb-4">
                                         <div class="form-outline">
                                             <label class="form-label" asp-for="RModel.FullName">Full Name</label>
                                             <input type="Text" asp-for="RModel.FullName" class="form-control" />
-                                            <span asp-validaton-for="RModel.FullName"></span>
+                                            <span asp-validation-for="RModel.FullName"></span>
                                         </div>
                                     </div>
 
@@ -46,40 +48,50 @@
                                                 <input type="radio" asp-for="RModel.Gender" value="female" /> Female
                                             </div>
 
-                                            <span asp-validaton-for="RModel.Gender" class="text-danger"></span>
+                                            <span asp-validation-for="RModel.Gender" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <div class="form-outline">
-                                                <label class="form-label" asp-for="RModel.EmailAddress">Email Address</label>
-                                                <input type="Text" asp-for="RModel.EmailAddress" class="form-control" />
-                                                <span asp-validaton-for="RModel.EmailAddress" class="text-danger"></span>
+                                                <label class="form-label" asp-for="RModel.Email">Email Address</label>
+                                                <input type="email" asp-for="RModel.Email" class="form-control" />
+                                                <span asp-validation-for="RModel.Email" class="text-danger"></span>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6 mb-4">
                                             <div class="form-outline">
                                                 <label class="form-label" asp-for="RModel.PhoneNumber">Phone Number</label>
-                                                <input type="Text" asp-for="RModel.PhoneNumber" class="form-control" />
-                                                <span asp-validaton-for="RModel.PhoneNumber" class="text-danger"></span>
+                                                <input type="number" asp-for="RModel.PhoneNumber" class="form-control" />
+                                                <span asp-validation-for="RModel.PhoneNumber" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <div class="form-outline">
-                                            <label class="form-label" asp-for="RModel.Password">Password</label>
-                                            <input type="Text" asp-for="RModel.Password" class="form-control" />
-                                            <span asp-validaton-for="RModel.Password" class="text-danger"></span>
+                                            <label class="form-label" asp-for="Password">Password</label>
+                                            <input id = "password_validation" type="password" asp-for="Password" class="form-control" required/>
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                        <div class="password_requirement">
+                                            <ul>
+                                                <li class="lowercase" ><span></span>One Lowercase Letter</li>
+                                                <li class ="capital"><span></span>One Capital Letter</li>
+                                                <li class ="number"><span></span>One Number</li>
+                                                <li class ="special"><span></span>One Special Letter</li>
+                                                <li class ="length"><span></span>At Least 12 Characters</li>
+                                            </ul>
+                                            
                                         </div>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <div class="form-outline">
-                                            <label class="form-label" asp-for="RModel.ConfirmPassword">Confirm Password</label>
-                                            <input type="Text" asp-for="RModel.ConfirmPassword" class="form-control" />
-                                            <span asp-validaton-for="RModel.ConfirmPassword" class="text-danger"></span>
+                                            <label class="form-label" asp-for="ConfirmPassword">Confirm Password</label>
+                                            <input type="password" asp-for="ConfirmPassword" class="form-control" required/>
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                         </div>
                                     </div>
 
@@ -87,7 +99,7 @@
                                         <div class="form-outline">
                                             <label class="form-label" asp-for="RModel.DeliveryAddress">Delivery Address</label>
                                             <input type="Text" asp-for="RModel.DeliveryAddress" class="form-control" />
-                                            <span asp-validaton-for="RModel.DeliveryAddress" class="text-danger"></span>
+                                            <span asp-validation-for="RModel.DeliveryAddress" class="text-danger"></span>
                                         </div>
                                     </div>
 
@@ -95,7 +107,7 @@
                                         <div class="form-outline">
                                             <label class="form-label" asp-for="RModel.CreditCardNumber">Credit Card Number</label>
                                             <input type="text" asp-for="RModel.CreditCardNumber" class="form-control" />
-                                            <span asp-validaton-for="RModel.CreditCardNumber" class="text-danger"></span>
+                                            <span asp-validation-for="RModel.CreditCardNumber" class="text-danger"></span>
                                         </div>
                                     </div>
 
@@ -103,7 +115,7 @@
                                         <div class="form-outline">
                                             <label class="form-label" asp-for="RModel.AboutMe">About Me</label>
                                             <textarea type="text" asp-for="RModel.AboutMe" class="form-control"></textarea>
-                                            <span asp-validaton-for="RModel.AboutMe" class="text-danger"></span>
+                                            <span asp-validation-for="RModel.AboutMe" class="text-danger"></span>
                                         </div>
                                     </div>
 
@@ -119,3 +131,84 @@
         </div>
     </div>
 </section>
+
+<style>
+    .password_requirement{
+    display:none;
+    }
+
+    .password_requirement ul {
+        padding:0;
+        margin:0 0 20px;
+        margin-top: 20px;
+        list-style:none;
+    }
+
+    .password_requirement ul li {
+        padding-left: 10px;
+        margin-bottom:8px;
+        color:red;
+    }
+
+    .password_requirement ul li.active{
+        color: #02af02
+    }
+
+    .password_requirement ul li span:before{
+                    content: "❌ "
+                    
+
+    }
+
+    .password_requirement ul li.active span:before {
+                    content: "✅  ";
+    }
+
+</style>
+
+<script>
+  
+let passValue;
+document.querySelector('#password_validation').addEventListener('focus', function(){
+        document.querySelector('.password_requirement').style.display = "block";
+    });
+document.querySelector('#password_validation').addEventListener('blur', function(){
+        document.querySelector('.password_requirement').style.display = "none";
+    });
+
+document.querySelector('#password_validation').addEventListener('keyup',function(){
+    passValue = this.value;
+
+    if(passValue.match(/[a-z]/g)){
+        document.querySelector('.lowercase').classList.add('active');
+    }else{
+        document.querySelector('.lowercase').classList.remove('active');
+    }
+
+    if (passValue.match(/[A-Z]/g)) {
+        document.querySelector('.capital').classList.add('active');
+    } else {
+        document.querySelector('.capital').classList.remove('active');
+    }
+
+    if (passValue.match(/[0-9]/g)) {
+        document.querySelector('.number').classList.add('active');
+    } else {
+        document.querySelector('.number').classList.remove('active');
+    }
+
+    if (passValue.length >= 12) {
+        document.querySelector('.length').classList.add('active');
+    } else {
+        document.querySelector('.length').classList.remove('active');
+    }
+
+    if (passValue.match(/[!@@#\$%^&*]/g)) {
+        document.querySelector('.special').classList.add('active');
+    } else {
+        document.querySelector('.special').classList.remove('active');
+    }
+
+    
+});
+</script>

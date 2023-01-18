@@ -12,5 +12,8 @@ namespace FreshFarmMarket_211283E.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public bool RememberMe { get; set; }
+
+        [Required]
+        public string Token { get; set; }
     }
 }

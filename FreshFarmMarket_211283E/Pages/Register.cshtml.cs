@@ -1,33 +1,56 @@
 using FreshFarmMarket_211283E.ViewModels;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace FreshFarmMarket_211283E.Pages
 {
     public class RegisterModel : PageModel
     {
-        private UserManager<Register> userManager { get; }
-        private SignInManager<Register> signInManager { get; }
+        private UserManager<ApplicationUser> userManager { get; }
+        private SignInManager<ApplicationUser> signInManager { get; }
 
         private IWebHostEnvironment _environment;
 
+
+        private readonly IDataProtector _protector;
+
         [BindProperty]
-        public Register RModel { get; set; }
+        public ApplicationUser RModel { get; set; }
 
         [BindProperty]
         public IFormFile? Upload { get; set; }
 
-        public RegisterModel(UserManager<Register> userManager, SignInManager<Register> signInManager, IWebHostEnvironment environment)
+        [BindProperty]
+        [Required]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z]).{8,}$", ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one special character, one number, and one lowercase letter.")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = string.Empty;
+
+        [BindProperty]
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare(nameof(Password), ErrorMessage = "Password and confirmation password does not match")]
+        public string ConfirmPassword { get; set; } = string.Empty;
+        public RegisterModel(UserManager<ApplicationUser> userManager, 
+                            SignInManager<ApplicationUser> signInManager, 
+                            IWebHostEnvironment environment,
+                            IDataProtectionProvider provider
+            )
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             _environment = environment;
-            
+            _protector = provider.CreateProtector("CardNumberProtector");
         }
 
         public void OnGet()
         { }
+
+
+       
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -41,6 +64,16 @@ namespace FreshFarmMarket_211283E.Pages
                         return Page();
                     }
 
+                    // Check for JPG Only, 
+                    var fileExtension = Path.GetExtension(Upload.FileName).ToLower();
+                    if (fileExtension != ".jpg")
+                    {
+                        // file is a JPG, process it
+                        ModelState.AddModelError("Upload", "JPG Only");
+                        return Page();
+
+                    }
+                    
                     var uploadsFolder = "uploads";
                     var imageFile = Guid.NewGuid() + Path.GetExtension(Upload.FileName);
                     var imagePath = Path.Combine(_environment.ContentRootPath, "wwwroot", uploadsFolder, imageFile);
@@ -48,34 +81,32 @@ namespace FreshFarmMarket_211283E.Pages
                     await Upload.CopyToAsync(fileStream);
                     var ImageURL = string.Format("/{0}/{1}", uploadsFolder, imageFile);
 
-                    var user = new Register
+                    var secureCreditCardNumber = _protector.Protect(RModel.CreditCardNumber);
+                    var user = new ApplicationUser
                     {
-                        UserName = RModel.FullName,
+                        UserName = RModel.Email,
                         Photo = ImageURL,
                         FullName = RModel.FullName,
                         Gender = RModel.Gender,
-                        EmailAddress = RModel.EmailAddress,
+                        Email = RModel.Email,
                         PhoneNumber = RModel.PhoneNumber,
-                        Password = RModel.Password,
-                        ConfirmPassword = RModel.ConfirmPassword,
                         DeliveryAddress = RModel.DeliveryAddress,
-                        CreditCardNumber = RModel.CreditCardNumber,
+                        CreditCardNumber = secureCreditCardNumber,
                         AboutMe = RModel.AboutMe,
                     };
 
 
-                    var result = await userManager.CreateAsync(user, RModel.Password);
+                    var result = await userManager.CreateAsync(user, Password);
                     if (result.Succeeded)
                     {
-                        await signInManager.SignInAsync(user, false);
-                        return RedirectToPage("Index");
+                       // await signInManager.SignInAsync(user, false);
+                        return RedirectToPage("/Login");
                     }
 
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        ModelState.AddModelError("", error.Description);
                     }
-
                 }
             }
             return Page();

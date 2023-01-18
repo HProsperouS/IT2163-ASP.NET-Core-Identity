@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\FreshFarmMarket_211283E.props" />
+</Project>

@@ -22,7 +22,7 @@ namespace FreshFarmMarket211283E.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FreshFarmMarket_211283E.ViewModels.Register", b =>
+            modelBuilder.Entity("FreshFarmMarket_211283E.ViewModels.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -38,10 +38,6 @@ namespace FreshFarmMarket211283E.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ConfirmPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CreditCardNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -51,12 +47,9 @@ namespace FreshFarmMarket211283E.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -82,10 +75,6 @@ namespace FreshFarmMarket211283E.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -268,7 +257,7 @@ namespace FreshFarmMarket211283E.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("FreshFarmMarket_211283E.ViewModels.Register", null)
+                    b.HasOne("FreshFarmMarket_211283E.ViewModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -277,7 +266,7 @@ namespace FreshFarmMarket211283E.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("FreshFarmMarket_211283E.ViewModels.Register", null)
+                    b.HasOne("FreshFarmMarket_211283E.ViewModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,7 +281,7 @@ namespace FreshFarmMarket211283E.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FreshFarmMarket_211283E.ViewModels.Register", null)
+                    b.HasOne("FreshFarmMarket_211283E.ViewModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -301,7 +290,7 @@ namespace FreshFarmMarket211283E.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("FreshFarmMarket_211283E.ViewModels.Register", null)
+                    b.HasOne("FreshFarmMarket_211283E.ViewModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
