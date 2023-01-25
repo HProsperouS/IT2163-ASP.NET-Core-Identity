@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreshFarmMarket211283E.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230117051354_lastwarning")]
-    partial class lastwarning
+    [Migration("20230125115403_hello")]
+    partial class hello
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

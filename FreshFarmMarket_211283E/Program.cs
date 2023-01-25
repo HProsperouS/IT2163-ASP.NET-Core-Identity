@@ -32,11 +32,24 @@ builder.Services.AddDataProtection();
 
 
 // Session Management
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+// builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddDistributedMemoryCache(); //save session in memory
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromSeconds(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.Name = "FreshFarmMarket_211283E";
+    options.Cookie.SameSite = SameSiteMode.Strict;
+});
+
+// Configure
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Login";
+    options.LogoutPath = "/Logout";
+    options.ExpireTimeSpan = TimeSpan.FromSeconds(2);
+    options.SlidingExpiration = true;
 });
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -49,9 +62,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 12;
     options.Password.RequiredUniqueChars = 1;
 
+
     // Lockout settings
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-    options.Lockout.MaxFailedAccessAttempts = 10;
+    options.Lockout.MaxFailedAccessAttempts = 3;
     options.Lockout.AllowedForNewUsers = true;
 });
 

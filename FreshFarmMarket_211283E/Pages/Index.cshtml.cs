@@ -24,19 +24,16 @@ namespace FreshFarmMarket_211283E.Pages
             _protector = provider.CreateProtector("CardNumberProtector");
 
         }
-        public List<ApplicationUser> UserList { get; set; } = new();
+        public ApplicationUser user { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
+            var userId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
+            user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
-            UserList = await _userManager.Users.ToListAsync();
-
-
-            foreach (var user in UserList)
-            {
-                var decryptedCreditCardNumber = _protector.Unprotect(user.CreditCardNumber);
-                user.CreditCardNumber = decryptedCreditCardNumber;
-            }
+            // var decryptedCreditCardNumber = _protector.Unprotect(user.CreditCardNumber);
+            // user.CreditCardNumber = decryptedCreditCardNumber;
+            
 
             return Page();
         }

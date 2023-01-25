@@ -19,7 +19,7 @@
                         <div class="col-xl-6">
                             <div class="card-body p-md-5 text-black">
                                 <h3 class="mb-5 text-uppercase"> registration form</h3>
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" asp-antiforgery="true">
                                     <div asp-validation-summary="All" class="text-danger"></div>
 
                                     <div class="form-outline mb-4">
@@ -27,6 +27,8 @@
                                             <label class="form-label" asp-for="Upload">Photo</label>
                                             <input type="file" accept="image/*" asp-for="Upload" class="form-control" onchange="showImgPreview(this)" />
                                             <span asp-validation-for="Upload" class="text-danger"></span>
+                                            <img id="imgPreview" class="rounded-circle" style="height:300px;width:300px;object-fit:cover; display:none" src="" />
+
                                         </div>
                                     </div>
 
@@ -42,10 +44,10 @@
                                         <div class="form-outline">
                                             <label class="form-label" asp-for="RModel.Gender">Gender</label><br />
                                             <div class="form-check form-check-inline mb-0 me-4">
-                                                <input type="radio" asp-for="RModel.Gender" value="male" /> Male
+                                                <input type="radio" asp-for="RModel.Gender" value="male"/> Male
                                             </div>
                                             <div class="form-check form-check-inline mb-0 me-4">
-                                                <input type="radio" asp-for="RModel.Gender" value="female" /> Female
+                                                <input type="radio" asp-for="RModel.Gender" value="female"/> Female
                                             </div>
 
                                             <span asp-validation-for="RModel.Gender" class="text-danger"></span>
@@ -72,9 +74,16 @@
                                     <div class="form-outline mb-4">
                                         <div class="form-outline">
                                             <label class="form-label" asp-for="Password">Password</label>
-                                            <input id = "password_validation" type="password" asp-for="Password" class="form-control" required/>
+                                            <input onkeyup="trigger()" id = "password_validation" type="password" asp-for="Password" class="form-control" required/>
                                             <span asp-validation-for="Password" class="text-danger"></span>
+
                                         </div>
+                                        <div class="indicator">
+                                            <span class="weak"></span>
+                                            <span class="medium"></span>
+                                            <span class="strong"></span>
+                                        </div>
+                                        <div class="text">Your Password is too weak</div>
                                         <div class="password_requirement">
                                             <ul>
                                                 <li class="lowercase" ><span></span>One Lowercase Letter</li>
@@ -164,6 +173,67 @@
                     content: "✅  ";
     }
 
+
+
+    .indicator{
+        height: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 10px 0;
+        display:none;
+    }
+
+    .indicator span{
+        width: 100%;
+        height: 100%;
+        background: lightgrey;
+        border-radius: 5px;
+        position:relative;
+    }
+
+    .indicator span.medium {
+        margin: 0 3px;
+    }
+
+    .indicator span:before{
+        content:'';
+        position:absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+    }
+
+    .indicator span.active.weak:before {
+        
+        background-color: #ff4757;
+    }
+
+    .indicator span.active.medium:before {
+        background-color: orange;
+    }
+
+    .indicator span.active.strong:before {
+        background-color: #23ad5c;
+    }
+    .text{
+        font-size: 15px;
+        font-weight: 500;
+        display:none;
+    }
+
+    .text.weak{
+            color: #ff4757;
+
+    }
+    .text.medium{
+        color: orange;
+    }
+
+    .text.strong {
+            color: #23ad5c;
+    }
+
 </style>
 
 <script>
@@ -211,4 +281,77 @@ document.querySelector('#password_validation').addEventListener('keyup',function
 
     
 });
+
+const indicator = document.querySelector(".indicator")
+const input = document.querySelector("#password_validation")
+const weak = document.querySelector(".weak")
+const medium = document.querySelector(".medium")
+const strong = document.querySelector(".strong")
+const text = document.querySelector(".text")
+
+let regExpWeak = /[a-z]/;
+let regExpMedium = /\d+/;
+let regExpStrong = /.[!,@@,#,$,%,^,&,*,?,_,~,-,(,)]/;
+
+    function trigger() {
+        if (input.value != "") {
+            indicator.style.display = "block";
+            indicator.style.display = "flex";
+            if (input.value.length <= 3 && (input.value.match(regExpWeak) || input.value.match(regExpMedium) || input.value.match(regExpStrong))) no = 1;
+            if (input.value.length >= 6 && ((input.value.match(regExpWeak) && input.value.match(regExpMedium)) || (input.value.match(regExpMedium) && input.value.match(regExpStrong)) || (input.value.match(regExpWeak) && input.value.match(regExpStrong)))) no = 2;
+            if (input.value.length >= 6 && input.value.match(regExpWeak) && input.value.match(regExpMedium) && input.value.match(regExpStrong)) no = 3;
+            if (no == 1) {
+                weak.classList.add("active");
+                text.style.display = "block";
+                text.textContent = "Your password is too week";
+                text.classList.add("weak");
+            }
+            if (no == 2) {
+                medium.classList.add("active");
+                text.textContent = "Your password is medium";
+                text.classList.add("medium");
+            } else {
+                medium.classList.remove("active");
+                text.classList.remove("medium");
+            }
+            if (no == 3) {
+                weak.classList.add("active");
+                medium.classList.add("active");
+                strong.classList.add("active");
+                text.textContent = "Your password is strong";
+                text.classList.add("strong");
+            } else {
+                strong.classList.remove("active");
+                text.classList.remove("strong");
+            }
+        } else {
+            indicator.style.display = "none";
+            text.style.display = "none";
+        }
+    }
+
+
+
+
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script>
+    function showImgPreview(input) {
+        var imgPreview = document.getElementById("imgPreview");
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = "block";
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            imgPreview.style.display = "none";
+        }
+    }
 </script>

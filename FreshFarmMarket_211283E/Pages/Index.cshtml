@@ -12,25 +12,23 @@
  
 <div class="container">
     <div class="row">
-        @foreach(var item in Model.UserList)
-        {
+        
             <div class="col-3">
                 <div class="card">
-                    <img class="card-img-top" src="@item.Photo" alt="Card image cap">
+                    <img class="card-img-top" src="@Model.user.Photo" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">@item.FullName</h5>
-                        <p class="card-text">About Me: @item.AboutMe</p>
+                        <h5 class="card-title">@Model.user.FullName</h5>
+                        <p class="card-text">About Me: @Model.user.AboutMe</p>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Gender: @item.Gender</li>
-                                <li class="list-group-item">Email: @item.Email</li>
-                                <li class="list-group-item">Credit Card Number: @item.CreditCardNumber</li>
+                                <li class="list-group-item">Gender: @Model.user.Gender</li>
+                                <li class="list-group-item">Email: @Model.user.Email</li>
+                                <li class="list-group-item">Credit Card Number After Encryption: @Model.user.CreditCardNumber</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        }
     </div>
 </div>
 }

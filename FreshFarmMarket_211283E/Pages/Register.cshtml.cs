@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FreshFarmMarket_211283E.Pages
 {
+    [ValidateAntiForgeryToken]
     public class RegisterModel : PageModel
     {
         private UserManager<ApplicationUser> userManager { get; }
@@ -21,6 +22,7 @@ namespace FreshFarmMarket_211283E.Pages
         public ApplicationUser RModel { get; set; }
 
         [BindProperty]
+        [Required]
         public IFormFile? Upload { get; set; }
 
         [BindProperty]
@@ -99,7 +101,9 @@ namespace FreshFarmMarket_211283E.Pages
                     var result = await userManager.CreateAsync(user, Password);
                     if (result.Succeeded)
                     {
-                       // await signInManager.SignInAsync(user, false);
+                        TempData["FlashMessage.Type"] = "success";
+                        TempData["FlashMessage.Text"] = string.Format("You have successfully registed for an account");
+                        // await signInManager.SignInAsync(user, false);
                         return RedirectToPage("/Login");
                     }
 

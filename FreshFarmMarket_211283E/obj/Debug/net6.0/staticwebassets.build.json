@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "G/Pr7VYxTDl7KLFbhP2L252UnhV7CcdpVdf0eLXw4/E=",
+  "Hash": "U+y6dISsJ/T61va7cEk6WMmCv0EqToqYZGaMjFbC5ao=",
   "Source": "FreshFarmMarket_211283E",
   "BasePath": "_content/FreshFarmMarket_211283E",
   "Mode": "Default",
@@ -1394,6 +1394,23 @@
       "OriginalItemSpec": "wwwroot\\uploads\\4fac09bd-79d2-4516-b848-4e17acbf6ec7.jpg"
     },
     {
+      "Identity": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\uploads\\579cc21b-b9e0-43a7-b93f-9bbbc3175acb.jpg",
+      "SourceId": "FreshFarmMarket_211283E",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\",
+      "BasePath": "_content/FreshFarmMarket_211283E",
+      "RelativePath": "uploads/579cc21b-b9e0-43a7-b93f-9bbbc3175acb.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\579cc21b-b9e0-43a7-b93f-9bbbc3175acb.jpg"
+    },
+    {
       "Identity": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\uploads\\61fb8c74-a152-45cb-9d8a-d119df4f892c.png",
       "SourceId": "FreshFarmMarket_211283E",
       "SourceType": "Discovered",
@@ -1460,6 +1477,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\783fa301-066f-47a2-8f5c-4af58de0baf3.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\uploads\\7ade23a3-f87b-41e2-83b4-dc44fde5349b.jpg",
+      "SourceId": "FreshFarmMarket_211283E",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\",
+      "BasePath": "_content/FreshFarmMarket_211283E",
+      "RelativePath": "uploads/7ade23a3-f87b-41e2-83b4-dc44fde5349b.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\7ade23a3-f87b-41e2-83b4-dc44fde5349b.jpg"
     },
     {
       "Identity": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\uploads\\7f54b1f6-6235-4d2b-981a-4bc900295689.jpg",
@@ -1970,6 +2004,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\f4cbec0a-1d4b-425b-8d28-d81cac232ea7.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\uploads\\f7860ba2-0c70-44bf-a96c-47706d3becdf.jpg",
+      "SourceId": "FreshFarmMarket_211283E",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\",
+      "BasePath": "_content/FreshFarmMarket_211283E",
+      "RelativePath": "uploads/f7860ba2-0c70-44bf-a96c-47706d3becdf.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\f7860ba2-0c70-44bf-a96c-47706d3becdf.jpg"
     },
     {
       "Identity": "C:\\Users\\liuji\\ApplicationSecurity\\FreshFarmMarket_211283E\\FreshFarmMarket_211283E\\wwwroot\\uploads\\fa5c2555-9419-4c8c-87e8-b122b1caaee9.jpg",

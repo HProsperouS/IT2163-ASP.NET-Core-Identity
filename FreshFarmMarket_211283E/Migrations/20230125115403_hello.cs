@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FreshFarmMarket211283E.Migrations
 {
     /// <inheritdoc />
-    public partial class lastwarning : Migration
+    public partial class hello : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

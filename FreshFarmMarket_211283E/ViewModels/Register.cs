@@ -14,7 +14,7 @@ namespace FreshFarmMarket_211283E.ViewModels
         [Required]
         [DataType(DataType.CreditCard)]
         // Visa Credit Card Format
-        [RegularExpression(@"^4[0-9]{12}(?:[0-9]{3})?$")]
+        [RegularExpression(@"^[0-9]{12}$", ErrorMessage = "PLease enter your credit card number in visa format, 12 digits")]
         public string CreditCardNumber { get; set; }
 
         [Required]
@@ -23,6 +23,7 @@ namespace FreshFarmMarket_211283E.ViewModels
 
         [Required]
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^[0-9]{8}$", ErrorMessage = "Invalid Phone Number Format")]
         public string PhoneNumber { get; set; }
 
         [Required]

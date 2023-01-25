@@ -38,14 +38,25 @@ namespace FreshFarmMarket_211283E.Pages
 
 			if (ModelState.IsValid)
             {
-                var identityResult = await signInManager.PasswordSignInAsync(LModel.Email, LModel.Password,
-               LModel.RememberMe, false);
+                var identityResult = await signInManager.PasswordSignInAsync(LModel.Email, LModel.Password,true, true);
                 if (identityResult.Succeeded)
                 {
+                    TempData["FlashMessage.Type"] = "success";
+                    TempData["FlashMessage.Text"] = string.Format("You have successfully LogIn");
                     return RedirectToPage("Index");
                 }
-
-                ModelState.AddModelError("", "Username or Password incorrect");
+                if (identityResult.IsLockedOut)
+                {
+                    TempData["FlashMessage.Type"] = "danger";
+                    TempData["FlashMessage.Text"] = string.Format("Your account have benn locked out");
+                    return Page();
+                }
+                else
+                {
+                    TempData["FlashMessage.Type"] = "danger";
+                    TempData["FlashMessage.Text"] = string.Format("Invalid username or password");
+                    return Page();
+                }
             }
             return Page();
         }
