@@ -9,38 +9,30 @@ namespace FreshFarmMarket_211283E.ViewModels
     {
         [Required]
         [DataType(DataType.Text)]
-        public string FullName { get; set; }
+        public string FullName { get; set; } = string.Empty;
 
         [Required]
         [DataType(DataType.CreditCard)]
         // Visa Credit Card Format
         [RegularExpression(@"^[0-9]{12}$", ErrorMessage = "PLease enter your credit card number in visa format, 12 digits")]
-        public string CreditCardNumber { get; set; }
+        public string CreditCardNumber { get; set; } = string.Empty;
 
         [Required]
         [DataType(DataType.Text)]
-        public string Gender{ get; set; }
+        public string Gender{ get; set; } = string.Empty;
 
         [Required]
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^[0-9]{8}$", ErrorMessage = "Invalid Phone Number Format")]
-        public string PhoneNumber { get; set; }
+        public string DeliveryAddress { get; set; } = string.Empty;
 
-        [Required]
-        public string DeliveryAddress { get; set; }
-
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
 
         [MaxLength(50)]
-        public string? Photo { get; set; }
+        public string? Photo { get; set; } = string.Empty;
 
         [Required]
-        public string AboutMe { get; set; }
+        public string AboutMe { get; set; } = string.Empty;
 
 
-        
+
 
     }
 

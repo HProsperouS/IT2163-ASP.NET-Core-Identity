@@ -1,6 +1,10 @@
 using FreshFarmMarket_211283E.Google;
 using FreshFarmMarket_211283E.Model;
+using FreshFarmMarket_211283E.Services;
 using FreshFarmMarket_211283E.ViewModels;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+// OTP
+builder.Services.Configure<SMSoptions>(builder.Configuration.GetSection("Twilio"));
+builder.Services.AddScoped<MessageService>();
+
 //Google ReCaptcha
 builder.Services.Configure<GoogleCaptchaConfig>(builder.Configuration.GetSection("GoogleReCaptcha"));
 builder.Services.AddTransient(typeof(GoogleCaptchaService));
@@ -16,19 +24,25 @@ builder.Services.AddTransient(typeof(GoogleCaptchaService));
 builder.Services.AddDbContext<AuthDbContext>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    // options.User.RequireUniqueEmail = true;
+    options.User.RequireUniqueEmail = true;
     //options.Lockout.AllowedForNewUsers = true;
     //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
     //options.Lockout.MaxFailedAccessAttempts = 3;
-  
+
 })
     .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<PhoneNumberTokenProvider<ApplicationUser>>("PhoneSMS");
 
 
 
 // Secure CreaditCardNumber
-builder.Services.AddDataProtection();
+builder.Services.AddDataProtection()
+    .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+    {
+        EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+        ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+    });
 
 
 // Session Management
@@ -67,6 +81,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
     options.Lockout.MaxFailedAccessAttempts = 3;
     options.Lockout.AllowedForNewUsers = true;
+
+
 });
 
 

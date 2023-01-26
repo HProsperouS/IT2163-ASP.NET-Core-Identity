@@ -100,3 +100,4 @@ C:\Users\liuji\ApplicationSecurity\FreshFarmMarket_211283E\FreshFarmMarket_21128
 C:\Users\liuji\ApplicationSecurity\FreshFarmMarket_211283E\FreshFarmMarket_211283E\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\liuji\ApplicationSecurity\FreshFarmMarket_211283E\FreshFarmMarket_211283E\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\liuji\ApplicationSecurity\FreshFarmMarket_211283E\FreshFarmMarket_211283E\bin\Debug\net6.0\AspNetCoreRateLimit.dll
+C:\Users\liuji\ApplicationSecurity\FreshFarmMarket_211283E\FreshFarmMarket_211283E\bin\Debug\net6.0\Twilio.dll

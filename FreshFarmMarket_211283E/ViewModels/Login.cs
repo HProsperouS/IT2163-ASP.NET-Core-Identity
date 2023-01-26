@@ -6,14 +6,14 @@ namespace FreshFarmMarket_211283E.ViewModels
     {
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
-        public bool RememberMe { get; set; }
+        public string Password { get; set; } = string.Empty.ToString();
+        public bool RememberMe { get; set; } 
 
         [Required]
-        public string Token { get; set; }
+        public string Token { get; set; } = string.Empty;
     }
 }
