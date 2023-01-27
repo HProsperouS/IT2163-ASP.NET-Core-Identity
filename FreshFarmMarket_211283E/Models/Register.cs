@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace FreshFarmMarket_211283E.ViewModels
+namespace FreshFarmMarket_211283E.Models
 {
     public class ApplicationUser:IdentityUser
     {
@@ -30,9 +30,6 @@ namespace FreshFarmMarket_211283E.ViewModels
 
         [Required]
         public string AboutMe { get; set; } = string.Empty;
-
-
-
 
     }
 

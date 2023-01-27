@@ -1,5 +1,6 @@
 using FreshFarmMarket_211283E.Google;
-using FreshFarmMarket_211283E.ViewModels;
+using FreshFarmMarket_211283E.Models;
+using FreshFarmMarket_211283E.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +17,26 @@ namespace FreshFarmMarket_211283E.Pages
         public Login LModel { get; set; }
 
         private readonly SignInManager<ApplicationUser> signInManager;
-        public LoginModel(SignInManager<ApplicationUser> signInManager, GoogleCaptchaService googleCaptchaService)
+		private readonly IHttpContextAccessor contxt;
+        private readonly LogServices _logService ;
+
+		public LoginModel(SignInManager<ApplicationUser> signInManager, 
+                            GoogleCaptchaService googleCaptchaService, 
+                            IHttpContextAccessor httpContextAccessor,
+                            LogServices logServices
+                            )
         {
             this.signInManager = signInManager;
             _googleCaptchaService= googleCaptchaService;
+            contxt = httpContextAccessor;
+            _logService = logServices;
         }
 
-        public async Task<IActionResult> OnGet()
+        public IActionResult OnGet()
         {
-            return Page();
+			return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostNormal()
         {
 			//Verify response token with Google
 			var captchaResult = await _googleCaptchaService.VerifyToken(LModel.Token);
@@ -39,11 +49,12 @@ namespace FreshFarmMarket_211283E.Pages
 			if (ModelState.IsValid)
             {
                 var identityResult = await signInManager.PasswordSignInAsync(LModel.Email, LModel.Password,true, true);
+
                 if (identityResult.Succeeded)
                 {
-
-                    TempData["FlashMessage.Type"] = "success";
+					TempData["FlashMessage.Type"] = "success";
                     TempData["FlashMessage.Text"] = "You have successfully LogIn";
+                    await _logService.RecordLogs("Login",LModel.Email);
 
                     return RedirectToPage("Index");
                 }
@@ -55,7 +66,7 @@ namespace FreshFarmMarket_211283E.Pages
                 }
                 else if(identityResult.RequiresTwoFactor)
                 {
-                    return RedirectToPage("Sms2FA");
+					return RedirectToPage("Sms2FA");
                 }
                 else
                 {
@@ -66,6 +77,10 @@ namespace FreshFarmMarket_211283E.Pages
             }
             return Page();
         }
+		public IActionResult OnPostGoogleLogin()
+		{
+			return Challenge(signInManager.ConfigureExternalAuthenticationProperties("Google", "/GoogleLogin"), "Google");
+		}
 
-    }
+	}
 }

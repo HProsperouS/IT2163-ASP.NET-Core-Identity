@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreshFarmMarket_211283E.ViewModels
+namespace FreshFarmMarket_211283E.Models
 {
     public class Login
     {

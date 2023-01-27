@@ -1,4 +1,4 @@
-using FreshFarmMarket_211283E.ViewModels;
+using FreshFarmMarket_211283E.Models;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,7 @@ namespace FreshFarmMarket_211283E.Pages
         private UserManager<ApplicationUser> userManager { get; }
         private SignInManager<ApplicationUser> signInManager { get; }
 
-        private IWebHostEnvironment _environment;
+        private  readonly IWebHostEnvironment _environment;
 
 
         private readonly IDataProtector _protector;

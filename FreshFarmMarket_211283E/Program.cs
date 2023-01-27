@@ -1,12 +1,17 @@
 using FreshFarmMarket_211283E.Google;
-using FreshFarmMarket_211283E.Model;
 using FreshFarmMarket_211283E.Services;
-using FreshFarmMarket_211283E.ViewModels;
+using FreshFarmMarket_211283E.Models;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
+using FreshFarmMarket_211283E.DataContext;
+
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,13 +26,24 @@ builder.Services.AddScoped<MessageService>();
 builder.Services.Configure<GoogleCaptchaConfig>(builder.Configuration.GetSection("GoogleReCaptcha"));
 builder.Services.AddTransient(typeof(GoogleCaptchaService));
 
+// Log User Activities
+builder.Services.AddScoped<LogServices>();
+
+//Google Login
+builder.Services.AddAuthentication()
+.AddGoogle(options =>
+{
+	var config = builder.Configuration.GetSection("Authentication").Get<GoogleLoginConfig>();
+	options.ClientId = config.ClientId;
+	options.ClientSecret = config.ClientSecret;
+});
+
+// builder.Services.Configure<>
+
 builder.Services.AddDbContext<AuthDbContext>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
-    //options.Lockout.AllowedForNewUsers = true;
-    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-    //options.Lockout.MaxFailedAccessAttempts = 3;
 
 })
     .AddEntityFrameworkStores<AuthDbContext>()
@@ -46,7 +62,6 @@ builder.Services.AddDataProtection()
 
 
 // Session Management
-// builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddDistributedMemoryCache(); //save session in memory
 builder.Services.AddSession(options =>
 {
@@ -62,8 +77,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Login";
     options.LogoutPath = "/Logout";
-    options.ExpireTimeSpan = TimeSpan.FromSeconds(2);
-    options.SlidingExpiration = true;
+    options.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+	// options.SlidingExpiration = true;
+	options.SlidingExpiration = false;
 });
 
 builder.Services.Configure<IdentityOptions>(options =>

@@ -1,4 +1,4 @@
-﻿using FreshFarmMarket_211283E.ViewModels;
+﻿using FreshFarmMarket_211283E.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
@@ -31,10 +31,9 @@ namespace FreshFarmMarket_211283E.Pages
             var userId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
             user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
-            // var decryptedCreditCardNumber = _protector.Unprotect(user.CreditCardNumber);
-            // user.CreditCardNumber = decryptedCreditCardNumber;
-            
-
+            var decryptedCreditCardNumber = _protector.Unprotect(user.CreditCardNumber);
+            user.CreditCardNumber = decryptedCreditCardNumber;
+          
             return Page();
         }
        

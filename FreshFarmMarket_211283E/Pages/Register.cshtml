@@ -20,6 +20,7 @@
                             <div class="card-body p-md-5 text-black">
                                 <h3 class="mb-5 text-uppercase"> registration form</h3>
                                 <form method="post" enctype="multipart/form-data" asp-antiforgery="true">
+                                    @Html.AntiForgeryToken()
                                     <div asp-validation-summary="All" class="text-danger"></div>
 
                                     <div class="form-outline mb-4">
