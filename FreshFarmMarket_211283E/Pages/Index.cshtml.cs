@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
 
 namespace FreshFarmMarket_211283E.Pages
 {
@@ -26,14 +27,21 @@ namespace FreshFarmMarket_211283E.Pages
         }
         public ApplicationUser user { get; set; } = new();
 
+        public string EncryptedCreditCardNumber { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             var userId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
             user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
-            var decryptedCreditCardNumber = _protector.Unprotect(user.CreditCardNumber);
-            user.CreditCardNumber = decryptedCreditCardNumber;
-          
+            EncryptedCreditCardNumber = user.CreditCardNumber;
+            
+            if(user.CreditCardNumber != string.Empty)
+            {
+                var decryptedCreditCardNumber = _protector.Unprotect(user.CreditCardNumber);
+                user.CreditCardNumber = decryptedCreditCardNumber;
+
+            }          
             return Page();
         }
        

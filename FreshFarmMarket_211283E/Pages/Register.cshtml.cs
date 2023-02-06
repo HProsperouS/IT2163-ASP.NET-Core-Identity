@@ -11,10 +11,8 @@ namespace FreshFarmMarket_211283E.Pages
     public class RegisterModel : PageModel
     {
         private UserManager<ApplicationUser> userManager { get; }
-        private SignInManager<ApplicationUser> signInManager { get; }
 
         private  readonly IWebHostEnvironment _environment;
-
 
         private readonly IDataProtector _protector;
 
@@ -50,13 +48,11 @@ namespace FreshFarmMarket_211283E.Pages
         public string Email { get; set; } = string.Empty;
 
         public RegisterModel(UserManager<ApplicationUser> userManager, 
-                            SignInManager<ApplicationUser> signInManager, 
                             IWebHostEnvironment environment,
                             IDataProtectionProvider provider
             )
         {
             this.userManager = userManager;
-            this.signInManager = signInManager;
             _environment = environment;
             _protector = provider.CreateProtector("CardNumberProtector");
         }
@@ -67,11 +63,6 @@ namespace FreshFarmMarket_211283E.Pages
             {
                 if (Upload == null)
                 {
-                    return Page();
-                }
-                if (Upload.Length > 2 * 1024 * 1024)
-                {
-                    ModelState.AddModelError("Upload", "File size cannot exceed 2MB.");
                     return Page();
                 }
 
@@ -94,6 +85,8 @@ namespace FreshFarmMarket_211283E.Pages
 
                 var secureCreditCardNumber = _protector.Protect(RModel.CreditCardNumber);
 
+                var encodedData = System.Net.WebUtility.HtmlEncode(RModel.AboutMe);
+
                 var user = new ApplicationUser
                 {
                     UserName = Email,
@@ -104,14 +97,15 @@ namespace FreshFarmMarket_211283E.Pages
                     PhoneNumber = "+65" + PhoneNumber,
                     DeliveryAddress = RModel.DeliveryAddress,
                     CreditCardNumber = secureCreditCardNumber,
-                    AboutMe = RModel.AboutMe,
+                    AboutMe = encodedData,
                     TwoFactorEnabled = true,
                     PhoneNumberConfirmed= true
                 };
 
 
                 var result = await userManager.CreateAsync(user, Password);
-                if (result.Succeeded)
+
+				if (result.Succeeded)
                 {
                     TempData["FlashMessage.Type"] = "success";
                     TempData["FlashMessage.Text"] = "You have successfully registed for an account";

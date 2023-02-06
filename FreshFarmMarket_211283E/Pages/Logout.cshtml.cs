@@ -22,10 +22,16 @@ namespace FreshFarmMarket_211283E.Pages
         }
         public async Task<IActionResult> OnPostLogoutAsync()
         {
+ 
             ApplicationUser user = await _userManager.GetUserAsync(User);
-			await _logService.RecordLogs("Logout", user.Email);
+            if(user == null)
+            {
+                return RedirectToPage("/Login");
+            }
+			await _logService.RecordLogs(Actions.Logout, user.Email);
 			await signInManager.SignOutAsync();
-			return RedirectToPage("/Login");
+            HttpContext.Session.Clear();
+            return RedirectToPage("/Login");
         }
 		public IActionResult OnPostDontLogout()
 		{

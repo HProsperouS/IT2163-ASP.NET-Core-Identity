@@ -20,6 +20,7 @@ namespace FreshFarmMarket_211283E.Google
 				using (HttpClient client = new HttpClient())
 				{
 					var httpResult = await client.GetAsync(url);
+
 					if (httpResult.StatusCode != HttpStatusCode.OK) {
 						return false;
 					}
@@ -27,6 +28,7 @@ namespace FreshFarmMarket_211283E.Google
 					var responseString = await httpResult.Content.ReadAsStringAsync();
 
 					var googleResult = JsonConvert.DeserializeObject<GoogleCaptchaResponse>(responseString);
+
 					return googleResult.success && googleResult.score >= 0.5;
 				}
 			}catch(Exception e)

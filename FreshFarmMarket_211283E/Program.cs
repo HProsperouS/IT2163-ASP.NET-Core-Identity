@@ -7,18 +7,13 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using FreshFarmMarket_211283E.DataContext;
 
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-// OTP
+// OTP and SMS
 builder.Services.Configure<SMSoptions>(builder.Configuration.GetSection("Twilio"));
 builder.Services.AddScoped<MessageService>();
 
@@ -29,6 +24,9 @@ builder.Services.AddTransient(typeof(GoogleCaptchaService));
 // Log User Activities
 builder.Services.AddScoped<LogServices>();
 
+// Reset Password Service
+builder.Services.AddScoped<PasswordResetServices>();
+
 //Google Login
 builder.Services.AddAuthentication()
 .AddGoogle(options =>
@@ -37,6 +35,7 @@ builder.Services.AddAuthentication()
 	options.ClientId = config.ClientId;
 	options.ClientSecret = config.ClientSecret;
 });
+
 
 // builder.Services.Configure<>
 
@@ -49,7 +48,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders()
     .AddTokenProvider<PhoneNumberTokenProvider<ApplicationUser>>("PhoneSMS");
-
 
 
 // Secure CreaditCardNumber
@@ -65,21 +63,26 @@ builder.Services.AddDataProtection()
 builder.Services.AddDistributedMemoryCache(); //save session in memory
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(30);
+    options.IdleTimeout = TimeSpan.FromMinutes(15);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
-    options.Cookie.Name = "FreshFarmMarket_211283E";
-    options.Cookie.SameSite = SameSiteMode.Strict;
+    // options.Cookie.SameSite = SameSiteMode.Strict;
 });
 
 // Configure
 builder.Services.ConfigureApplicationCookie(options =>
 {
+    options.Cookie.Name = "FreshFarmMarket_211283E";
     options.LoginPath = "/Login";
     options.LogoutPath = "/Logout";
-    options.ExpireTimeSpan = TimeSpan.FromSeconds(30);
-	// options.SlidingExpiration = true;
-	options.SlidingExpiration = false;
+    // options.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+    options.AccessDeniedPath = "/ErrorPages/Error401";
+    options.SlidingExpiration = true;
+});
+
+builder.Services.Configure<SecurityStampValidatorOptions>(s =>
+{
+    s.ValidationInterval = TimeSpan.Zero;
 });
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -92,21 +95,13 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 12;
     options.Password.RequiredUniqueChars = 1;
 
-
-    // Lockout settings
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+	// Lockout settings
+	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
     options.Lockout.MaxFailedAccessAttempts = 3;
     options.Lockout.AllowedForNewUsers = true;
-
-
 });
 
 
-
-builder.Services.ConfigureApplicationCookie(Config =>
-{
-    Config.LoginPath = "/Login";
-});
 
 var app = builder.Build();
 
@@ -130,10 +125,13 @@ app.UseStatusCodePages( context =>
 			context.HttpContext.Response.Redirect("/ErrorPages/Error404");
 			break;
 		case 403:
-			context.HttpContext.Response.Redirect("/Error403");
+			context.HttpContext.Response.Redirect("/ErrorPages/Error403");
 			break;
-		default:
-			context.HttpContext.Response.Redirect("/Error");
+        case 401:
+            context.HttpContext.Response.Redirect("/ErrorPages/Error401");
+            break;
+        default:
+			context.HttpContext.Response.Redirect("/ErrorPages/Error");
 			break;
 	}
 

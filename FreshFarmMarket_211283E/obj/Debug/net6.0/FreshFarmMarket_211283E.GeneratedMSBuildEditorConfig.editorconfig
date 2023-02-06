@@ -24,6 +24,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3JQYWdlc1xFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/ErrorPages/Error401.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3JQYWdlc1xFcnJvcjQwMS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/ErrorPages/Error403.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3JQYWdlc1xFcnJvcjQwMy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -48,12 +52,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/PasswordResetRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFzc3dvcmRSZXNldFJlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/Shared/_FlashMessage.cshtml]
@@ -66,6 +78,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/Sms2FA.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU21zMkZBLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/ViewLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld0xvZ3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/liuji/ApplicationSecurity/FreshFarmMarket_211283E/FreshFarmMarket_211283E/Pages/_ViewImports.cshtml]

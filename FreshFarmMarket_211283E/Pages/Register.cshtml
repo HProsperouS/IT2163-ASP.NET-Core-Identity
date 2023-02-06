@@ -20,7 +20,6 @@
                             <div class="card-body p-md-5 text-black">
                                 <h3 class="mb-5 text-uppercase"> registration form</h3>
                                 <form method="post" enctype="multipart/form-data" asp-antiforgery="true">
-                                    @Html.AntiForgeryToken()
                                     <div asp-validation-summary="All" class="text-danger"></div>
 
                                     <div class="form-outline mb-4">
@@ -37,7 +36,7 @@
                                         <div class="form-outline">
                                             <label class="form-label" asp-for="RModel.FullName">Full Name</label>
                                             <input type="Text" asp-for="RModel.FullName" class="form-control" />
-                                            <span asp-validation-for="RModel.FullName"></span>
+                                            <span asp-validation-for="RModel.FullName" class="text-danger"></span>
                                         </div>
                                     </div>
 

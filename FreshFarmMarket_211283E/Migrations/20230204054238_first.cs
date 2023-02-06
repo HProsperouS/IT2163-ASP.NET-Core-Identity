@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FreshFarmMarket211283E.Migrations
 {
     /// <inheritdoc />
-    public partial class lw : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,6 +36,9 @@ namespace FreshFarmMarket211283E.Migrations
                     DeliveryAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    lastPasswordChange = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PreviousPasswordHash1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PreviousPasswordHash2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -64,7 +67,7 @@ namespace FreshFarmMarket211283E.Migrations
                     User = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Action = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

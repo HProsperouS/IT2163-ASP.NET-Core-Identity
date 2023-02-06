@@ -18,12 +18,13 @@
                     <img class="card-img-top" src="@Model.user.Photo" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">@Model.user.FullName</h5>
-                        <p class="card-text">About Me: @Model.user.AboutMe</p>
+                        <p class="card-text">@System.Net.WebUtility.HtmlDecode(Model.user.AboutMe)</p>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Gender: @Model.user.Gender</li>
-                                <li class="list-group-item">Email: @Model.user.Email</li>
-                                <li class="list-group-item">Credit Card Number After Encryption: @Model.user.CreditCardNumber</li>
+                                <li class="list-group-item">Email: @HttpContext.Session.GetString("SessionEmail")</li>
+                                <li class="list-group-item">Credit Card Number After Decryption: @Model.user.CreditCardNumber</li>
+                                <li class="list-group-item">Credit Card Number After Encryption: @Model.EncryptedCreditCardNumber</li>
                             </ul>
                         </div>
                     </div>

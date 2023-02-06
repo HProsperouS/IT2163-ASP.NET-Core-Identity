@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FreshFarmMarket_211283E.Pages
 {
+    [ValidateAntiForgeryToken]
     public class LoginModel : PageModel
     {
 		private readonly GoogleCaptchaService _googleCaptchaService;
@@ -19,17 +20,21 @@ namespace FreshFarmMarket_211283E.Pages
         private readonly SignInManager<ApplicationUser> signInManager;
 		private readonly IHttpContextAccessor contxt;
         private readonly LogServices _logService ;
+        private readonly UserManager<ApplicationUser> _userManager;
+      
 
-		public LoginModel(SignInManager<ApplicationUser> signInManager, 
+        public LoginModel(SignInManager<ApplicationUser> signInManager, 
                             GoogleCaptchaService googleCaptchaService, 
                             IHttpContextAccessor httpContextAccessor,
-                            LogServices logServices
+                            LogServices logServices,
+                            UserManager<ApplicationUser> userManager
                             )
         {
             this.signInManager = signInManager;
             _googleCaptchaService= googleCaptchaService;
             contxt = httpContextAccessor;
             _logService = logServices;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -43,20 +48,31 @@ namespace FreshFarmMarket_211283E.Pages
             Console.Write(captchaResult);
             if (!captchaResult)
             {
+                TempData["FlashMessage.Type"] = "danger";
+                TempData["FlashMessage.Text"] = "Last Warning, please try again to verify you are human.";
                 return Page();
             }
 
 			if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByNameAsync(LModel.Email);
+
+                if (user != null && await _userManager.CheckPasswordAsync(user, LModel.Password))
+                {
+                    await _userManager.UpdateSecurityStampAsync(user);
+                }
+
                 var identityResult = await signInManager.PasswordSignInAsync(LModel.Email, LModel.Password,true, true);
 
                 if (identityResult.Succeeded)
                 {
 					TempData["FlashMessage.Type"] = "success";
                     TempData["FlashMessage.Text"] = "You have successfully LogIn";
-                    await _logService.RecordLogs("Login",LModel.Email);
+                    await _logService.RecordLogs(Actions.Login, LModel.Email);
 
-                    return RedirectToPage("Index");
+                    // HttpContext.Session.Clear();
+                    HttpContext.Session.SetString("SessionEmail", LModel.Email);
+                    return RedirectToPage("/Index");
                 }
                 else if (identityResult.IsLockedOut)
                 {
@@ -81,6 +97,5 @@ namespace FreshFarmMarket_211283E.Pages
 		{
 			return Challenge(signInManager.ConfigureExternalAuthenticationProperties("Google", "/GoogleLogin"), "Google");
 		}
-
 	}
 }

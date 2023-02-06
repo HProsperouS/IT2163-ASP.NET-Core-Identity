@@ -15,11 +15,11 @@ namespace FreshFarmMarket_211283E.Services
 		}
 		public async Task<List<Log>> RetrieveAllLogs()
 		{
-			return await _context.Logs.ToListAsync();
+			return await _context.Logs.OrderByDescending(log => log.CreateTime).ToListAsync();
 		}
-		public async Task RecordLogs(string action, string email)
+		public async Task RecordLogs(Actions action, string email)
 		{
-			if (action == "Login")
+			if (action == Actions.Login)
 			{
 				await _context.Logs.AddAsync(new Log()
 				{
@@ -29,7 +29,7 @@ namespace FreshFarmMarket_211283E.Services
 				});
 			}
 
-			else if (action == "Logout")
+			else if (action == Actions.Logout)
 			{
 				await _context.Logs.AddAsync(new Log()
 				{

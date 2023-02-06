@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreshFarmMarket211283E.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230127165003_lw")]
-    partial class lw
+    [Migration("20230204054238_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,6 +91,12 @@ namespace FreshFarmMarket211283E.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("PreviousPasswordHash1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreviousPasswordHash2")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -100,6 +106,9 @@ namespace FreshFarmMarket211283E.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime?>("lastPasswordChange")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -122,12 +131,12 @@ namespace FreshFarmMarket211283E.Migrations
                     b.Property<int>("Action")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("User")
                         .IsRequired()

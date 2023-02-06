@@ -6,7 +6,10 @@
 }
 @using Microsoft.Extensions.Options
 @using FreshFarmMarket_211283E.Google
+
+
 @inject IOptions<GoogleCaptchaConfig> GoogleCaptchaConfig
+
 @inject IHttpContextAccessor contxt;
 
 <div class="container mt-5">
@@ -15,36 +18,35 @@
 
 		<div class="col-sm-12 col-md-12 col-lg-4">
 			<h1 class="mb-3">Login </h1>
+				<form method="post" asp-antiforgery="true" asp-page-handler="Normal">
+					<input type="hidden" id="LModelToken" asp-for="LModel.Token"/>
+					<div class="mb-3">
+						<label class="form-label" asp-for="LModel.Email">Email Address</label>
+						<input type="Text" asp-for="LModel.Email" class="form-control" />
+						<span asp-validaton-for="LModel.Email" class="text-danger"></span>
+					</div>
 
-			<form method="post" asp-antiforgery="true" asp-page-handler="Normal">
-				@Html.AntiForgeryToken()
+					<div class="mb-3">
+						<label class="form-label" asp-for="LModel.Password">Password</label>
+						<input type="password" asp-for="LModel.Password" class="form-control" />
+						<span asp-validaton-for="LModel.Password" class="text-danger"></span>
+					</div>
 
-				<input type="hidden" id="LModelToken" asp-for="LModel.Token"/>
-				<div class="mb-3">
-					<label class="form-label" asp-for="LModel.Email">Email Address</label>
-					<input type="Text" asp-for="LModel.Email" class="form-control" />
-					<span asp-validaton-for="LModel.Email" class="text-danger"></span>
-				</div>
-
-				<div class="mb-3">
-					<label class="form-label" asp-for="LModel.Password">Password</label>
-					<input type="password" asp-for="LModel.Password" class="form-control" />
-					<span asp-validaton-for="LModel.Password" class="text-danger"></span>
-				</div>
-
-				<div class="mb-3 form-check">
-					<input type="checkbox" asp-for="LModel.RememberMe" class="form-check-input" />
-					<label class="form-check-label" asp-for="LModel.RememberMe">Remember Me?</label>
-				</div>
-
-				<div class="mb-3">
-					<button type="submit" class="btn btn-primary">Login</button>
-				</div>
-			</form>
-
-			 <form method="post" class="d-grid gap-3" asp-page-handler="GoogleLogin">
-                <button type="submit" class="btn btn-primary">Login with Google</button>
-            </form>
+					<div class="mb-3 form-check">
+						<input type="checkbox" asp-for="LModel.RememberMe" class="form-check-input" />
+						<label class="form-check-label" asp-for="LModel.RememberMe">Remember Me?</label>
+					</div>
+					<div class="mb-3">
+						<button style="width:100%" type="submit" class="btn btn-primary">Login</button>
+					</div>
+				</form>
+				<form method="post" class="d-grid gap-3" asp-page-handler="GoogleLogin">
+					<button type = "submit" class="btn btn-outline-dark" style="text-transform:none">
+						<img style="margin-bottom:3px; margin-right:5px; width:20px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+						Login with Google
+					</button>
+				</form>
+			<a asp-page="/PasswordResetRequest">Forget password? Why so noob</a>
 		</div>
 	</div>
 </div>

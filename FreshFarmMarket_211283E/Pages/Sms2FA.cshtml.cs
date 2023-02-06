@@ -39,12 +39,14 @@ namespace FreshFarmMarket_211283E.Pages
             {
                 return Page();
             }
-            var result = await _signInManager.TwoFactorSignInAsync("PhoneSMS", OTP,false,false);
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+
+            var result = await _signInManager.TwoFactorSignInAsync("PhoneSMS", OTP, false,false);
             if (result.Succeeded)
             {
-
                 TempData["FlashMessage.Type"] = "success";
                 TempData["FlashMessage.Text"] = "You have successfully LogIn";
+                HttpContext.Session.SetString("SessionEmail", user.Email);
 
                 return Redirect("/Index");
             }
